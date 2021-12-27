@@ -69,6 +69,7 @@ import com.android.systemui.statusbar.notification.collection.provider.LaunchFul
 import com.android.systemui.statusbar.notification.collection.render.NotificationVisibilityProvider;
 import com.android.systemui.statusbar.notification.interruption.NotificationInterruptStateProvider;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow;
+import com.android.systemui.statusbar.policy.GameSpaceManager;
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRowDragController;
 import com.android.systemui.statusbar.notification.row.OnUserInteractionCallback;
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent;
@@ -556,6 +557,10 @@ class StatusBarNotificationActivityStarter implements NotificationActivityStarte
 
     @VisibleForTesting
     void launchFullScreenIntent(NotificationEntry entry) {
+        GameSpaceManager gameSpace = mStatusBar.getGameSpaceManager();
+        if (gameSpace != null && gameSpace.shouldSuppressFullScreenIntent()) {
+            return;
+        }
         // Skip if device is in VR mode.
         if (mPresenter.isDeviceInVrMode()) {
             mLogger.logFullScreenIntentSuppressedByVR(entry);
