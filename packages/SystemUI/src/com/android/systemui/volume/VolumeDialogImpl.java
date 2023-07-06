@@ -518,6 +518,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         view.getLocationInWindow(locInWindow);
 
         float xExtraSize = 0;
+        float yExtraSize = 0;
 
         // The ringer and rows container have extra height at the left to fit the expanded ringer
         // drawer. This area should not be touchable unless the ringer drawer is open or expandable
